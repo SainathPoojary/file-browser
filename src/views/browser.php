@@ -1,0 +1,1 @@
+<h1>Hello browser</h1>
