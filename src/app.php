@@ -1,7 +1,12 @@
 <?php
-
+require __DIR__ . '/env.php';
 $request = $_SERVER['REQUEST_URI'];
 $viewDir = '/views/';
+
+if (!isset($_COOKIE['token']) || !password_verify(getenv('PASSWORD'), $_COOKIE['token'])) {
+    global $request;
+    $request = '/login';
+}
 
 switch ($request) {
     case '':

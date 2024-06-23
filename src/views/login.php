@@ -9,7 +9,7 @@
             <div class="mt-5">
 
                 <!-- Form -->
-                <form action="/" method="post">
+                <form action="/src/handlers/auth.php" method="post">
                     <div class="grid gap-y-4">
                         <!-- Form Group -->
                         <div>
