@@ -1,24 +1,20 @@
 <?php
 require __DIR__ . '/env.php';
 $request = $_SERVER['REQUEST_URI'];
-$viewDir = '/views/';
+define('VIEW_DIR', '/views/');
+define('HANDLER_DIR', '/handlers/');
+define('PARTIALS_DIR', __DIR__ . '/partials/');
 
-if (!isset($_COOKIE['token']) || !password_verify(getenv('PASSWORD'), $_COOKIE['token'])) {
-    global $request;
-    $request = '/login';
+$isAuth = isset($_COOKIE['token']) && password_verify(getenv('PASSWORD'), $_COOKIE['token']);
+
+if (!$isAuth && $request !== '/login') {
+    header('Location: /login');
+    exit();
 }
 
-switch ($request) {
-    case '':
-    case '/':
-        require __DIR__ . $viewDir . 'browser.php';
-        break;
-
-    case '/login':
-        require __DIR__ . $viewDir . 'login.php';
-        break;
-
-    default:
-        http_response_code(404);
-        require __DIR__ . $viewDir . '404.php';
-}
+match (true) {
+    $request === '/' => header('Location: /files'), // Redirect to /files if the request is /
+    $request === '/login' => require __DIR__ . VIEW_DIR . 'login.php',
+    str_starts_with($request, "/files") => require __DIR__ . VIEW_DIR . 'browser.php',
+    default => require __DIR__ . VIEW_DIR . '404.php'
+};

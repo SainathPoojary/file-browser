@@ -18,5 +18,5 @@ if ($username === 'admin' && $password === 'admin') {
         setcookie('token', $hashedPassword, 0, '/');
     }
 }
-header('Location: /');
+header('Location: /files');
 exit();
