@@ -51,8 +51,9 @@
                                             <?php echo $file["name"]; ?>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                        <a <?php echo !is_dir($file["full_path"]) ? ('href="/download.php?file=' . $file['full_path'] . '"') : '' ?> class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Download</a>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium space-x-2">
+                                        <a <?php echo !is_dir($file["full_path"]) ? ('href="/src/handlers/delete.php?file=' . $file['full_path'] . '"') : '' ?> class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Delete</a>
+                                        <a <?php echo !is_dir($file["full_path"]) ? ('href="/src/handlers/download.php?file=' . $file['full_path'] . '"') : '' ?> class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Download</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
