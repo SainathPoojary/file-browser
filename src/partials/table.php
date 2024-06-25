@@ -21,30 +21,38 @@
                                 <th scope="col" class="py-3 px-4 pe-0">
 
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Address</th>
+                                <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Name</th>
                                 <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                            <?php foreach ($dir as $key => $value) : ?>
+                            <?php foreach ($files as $key => $file) : ?>
                                 <tr>
                                     <td class="py-3 ps-4">
-                                        <?php if (is_dir(getenv("ROOT_DIR") . "/" . $value)) : ?>
+                                        <!-- <?php echo $file["relative_path"] ?> -->
+
+                                        <?php if (is_dir($file["full_path"])) : ?>
                                             <svg class="w-6 h-auto" width="100" height="100" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M133.334 666.667C115 666.667 99.3114 660.144 86.267 647.1C73.2225 634.056 66.6892 618.356 66.667 600V200C66.667 181.667 73.2003 165.978 86.267 152.933C99.3337 139.889 115.023 133.356 133.334 133.333H333.334L400 200H666.667C685 200 700.7 206.533 713.767 219.6C726.834 232.667 733.356 248.356 733.334 266.667V600C733.334 618.333 726.811 634.033 713.767 647.1C700.723 660.167 685.023 666.689 666.667 666.667H133.334Z" fill="#B4DFFF" />
                                             </svg>
                                         <?php else : ?>
-                                            <svg class="fill-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file">
+                                            <svg class="fill-gray-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file">
                                                 <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
                                                 <path d="M14 2v4a2 2 0 0 0 2 2h4" />
                                             </svg>
                                         <?php endif; ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                        <?php echo $value; ?>
+                                        <?php if (is_dir($file["full_path"])) : ?>
+                                            <a href="<?php echo urlencode($file['relative_path']) ?>" class="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-400">
+                                                <?php echo $file["name"]; ?>
+                                            </a>
+                                        <?php else : ?>
+                                            <?php echo $file["name"]; ?>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                        <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Delete</button>
+                                        <a <?php echo !is_dir($file["full_path"]) ? ('href="/download.php?file=' . $file['full_path'] . '"') : '' ?> class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400">Download</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
